@@ -83,7 +83,7 @@ public class NotificationError extends XComponent
 			message.getPreferredSize().height + insets.top + insets.bottom);
 	}
 
-	public void showMessage(String s)
+	public void newNotification(String s)
 	{
 		message_queue.offer(s);
 		if (!timer.isRunning())

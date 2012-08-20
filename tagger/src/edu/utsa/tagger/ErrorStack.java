@@ -29,6 +29,10 @@ public final class ErrorStack
 	{
 		Err err = new Err(code, message);
 		error_stack.push(err);
+		if (ShellGUI.dialog_open)
+		{
+			ShellGUI.getNotificationError().newNotification(message);
+		}
 		System.out.println(message);
 	}
 	

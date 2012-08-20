@@ -32,6 +32,7 @@ public class ShellGUI extends JDialog {
 	private static NotificationError notification_error = new NotificationError();
 	private static NotificationInfo notification_info = new NotificationInfo();
 	private static float base_font_size = 12.0f;
+	public static boolean dialog_open = false;
 	
 	public static void main(String[] args)
 	{
@@ -55,7 +56,6 @@ public class ShellGUI extends JDialog {
 		}
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.exit(0);
@@ -155,25 +155,14 @@ public class ShellGUI extends JDialog {
 		setVisible(true);
 	}
 	
-	public static String[] showDialog(String tags, String[] events)
+	public static float getBaseFontSize()
 	{
-		new ShellGUI(tags, events);
-		return ShellCLI.getReturnValue();
+		return base_font_size;
 	}
-	
-	public static void showInfo(String s)
+
+	public static NotificationError getNotificationError()
 	{
-		notification_info.showInfo(s);
-	}
-	
-	public static void hideInfo()
-	{
-		notification_info.hideInfo();
-	}
-	
-	public static boolean isEventSelected(DataWrappersEvent event)
-	{
-		return event == ShellCLI.getCurrentEvent();
+		return notification_error;
 	}
 
 	public static DataWrappersTag getTag(UUID uuid)
@@ -181,14 +170,31 @@ public class ShellGUI extends JDialog {
 		return ShellCLI.getTag(uuid);
 	}
 
-	public static float getBaseFontSize()
+	public static void hideInfo()
 	{
-		return base_font_size;
+		notification_info.hideInfo();
 	}
-	
+
+	public static void insertEvent(String s)
+	{
+		DataWrappersEvent item = ShellCLI.insertEvent(s);
+		events_panel.load(ShellCLI.getEvents(), ShellCLI.getSelectedTags());
+	}
+
+	public static boolean isEventSelected(DataWrappersEvent event)
+	{
+		return event == ShellCLI.getCurrentEvent();
+	}
+
 	public static boolean isTagCurrentlySelected(DataWrappersTag tag)
 	{
 		return ShellCLI.isTagCurrentlySelected(tag);
+	}
+
+	public static void removeEvent(UUID event_uuid)
+	{
+		ShellCLI.removeEvent(event_uuid);
+		events_panel.load(ShellCLI.getEvents(), ShellCLI.getSelectedTags());
 	}
 
 	public static void selectEvent(DataWrappersEvent event)
@@ -198,6 +204,19 @@ public class ShellGUI extends JDialog {
 			events_panel.repaint();
 			tags_panel.repaint();
 		}
+	}
+
+	public static String[] showDialog(String tags, String[] events)
+	{
+		dialog_open = true;
+		new ShellGUI(tags, events);
+		dialog_open = false;
+		return ShellCLI.getReturnValue();
+	}
+
+	public static void showInfo(String s)
+	{
+		notification_info.showInfo(s);
 	}
 
 	public static void toggleTag(DataWrappersTag tag)
@@ -210,7 +229,7 @@ public class ShellGUI extends JDialog {
 		{
 			if (ErrorStack.peek().code == 230)
 			{
-				notification_error.showMessage("Please select an event first.");
+				notification_error.newNotification("Please select an event first.");
 			}
 		}
 	}
@@ -226,17 +245,5 @@ public class ShellGUI extends JDialog {
 		base_font_size -= 4;
 		events_panel.repaint();
 		tags_panel.repaint();
-	}
-	
-	public static void removeEvent(UUID event_uuid)
-	{
-		ShellCLI.removeEvent(event_uuid);
-		events_panel.load(ShellCLI.getEvents(), ShellCLI.getSelectedTags());
-	}
-
-	public static void insertEvent(String s)
-	{
-		DataWrappersEvent item = ShellCLI.insertEvent(s);
-		events_panel.load(ShellCLI.getEvents(), ShellCLI.getSelectedTags());
 	}
 }
