@@ -36,19 +36,22 @@ public class ShellGUI extends JDialog {
 	public static void main(String[] args)
 	{
 		String tags = null;
-		String events = null;
+		String[] events = {
+			"1,some event 1,some event 1's description,/Time-Locked Event/Stimulus/Visual/Shape/Rotated,/Time-Locked Event/Stimulus/Visual/Shape/Star",
+			"2,some event 2,some event 2's description",
+			"3,some event 3,some event 3's description",
+			"4,some event 4,some event 4's description",
+			"5,some event 5,some event 5's description"
+		};
 		try
 		{
 			File file = new File("C:\\Users\\Thomas\\Desktop\\HED Specification 1.0.xml");
 			tags = fileToString(file, Charset.forName("UTF-8"));
-			events = 
-				"1;some event 1;some event 1's description\n" +
-				"2;some event 2;some event 2's description\n" +
-				"3;some event 3;some event 3's description\n" +
-				"4;some event 4;some event 4's description\n" +
-				"5;some event 5;some event 5's description\n";
-			String s = ShellGUI.showDialog(tags, events);
-			System.out.println(s);
+			String[] result = ShellGUI.showDialog(tags, events);
+			for (String s : result)
+			{
+				System.out.println(s);
+			}
 		}
 		catch (Exception e)
 		{
@@ -89,7 +92,7 @@ public class ShellGUI extends JDialog {
 		return new String(b, charset);
 	}
 	
-	public ShellGUI(String tags, String events)
+	public ShellGUI(String tags, String[] events)
 	{
 		super((JDialog) null, true);
 		try
@@ -152,7 +155,7 @@ public class ShellGUI extends JDialog {
 		setVisible(true);
 	}
 	
-	public static String showDialog(String tags, String events)
+	public static String[] showDialog(String tags, String[] events)
 	{
 		new ShellGUI(tags, events);
 		return ShellCLI.getReturnValue();

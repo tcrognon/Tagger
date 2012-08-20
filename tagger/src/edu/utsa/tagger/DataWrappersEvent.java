@@ -19,9 +19,19 @@ public class DataWrappersEvent implements Comparable<DataWrappersEvent> {
 	{
 		return uuid;
 	}
+	
+	public String getCode()
+	{
+		return code;
+	}
 
 	public String getLabel() {
 		return label;
+	}
+	
+	public String getDescription()
+	{
+		return description;
 	}
 
 	public void setLabel(String label) {

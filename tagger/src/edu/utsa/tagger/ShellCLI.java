@@ -3,6 +3,7 @@ package edu.utsa.tagger;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.UUID;
 import javax.xml.bind.JAXBContext;
@@ -17,24 +18,33 @@ public final class ShellCLI
 
 	private ShellCLI() {}
 
-	static String getReturnValue()
+	static String[] getReturnValue()
 	{
-		String s = "";
-		for (DataWrappersEvent e : events)
+		ArrayList<String> arraylist = new ArrayList<String>();
+		for (DataWrappersEvent event : events)
 		{
-			s += e.getLabel() + ";";
+			String s = "";
+			s += event.getCode() + ",";
+			s += event.getLabel() + ",";
+			s += event.getDescription() + ",";
 			for (DataWrappersSelectedTag st : selectedtags)
 			{
-				if (st.getItemUuid().equals(e.getUuid()))
+				if (st.getItemUuid().equals(event.getUuid()))
 				{
-					s += getTag(st.getTagUuid()).getPath() + ";";
+					s += getTag(st.getTagUuid()).getPath() + ",";
 				}
 			}
-			s += "\n";
+			s = s.substring(0, s.length()-1);
+			arraylist.add(s);
 		}
-		return s;
+		String[] result = new String[arraylist.size()];
+		for (int i = 0; i < result.length; i++)
+		{
+			result[i] = arraylist.get(i);
+		}
+		return result;
 	}
-	
+
 	static void loadTags(String xml)
 	{
 		hed = null;
@@ -48,13 +58,13 @@ public final class ShellCLI
 		{
 			e.printStackTrace();
 		}
-		
+
 		for (DataWrappersTag tag : hed.getTags())
 		{
 			setTagPath(tag, "");
 		}
 	}
-	
+
 	private static void setTagPath(DataWrappersTag tag, String parent_path)
 	{
 		String path = parent_path + "/" + tag.getLabel();
@@ -65,21 +75,60 @@ public final class ShellCLI
 		}
 	}
 
-	static void loadEvents(String events_string)
+	static void loadEvents(String[] events_string)
 	{
-		String[] s = events_string.split("\\n");
-		for (String event : s)
+		for (String s : events_string)
 		{
-			String[] event_data = event.split(";");
-			if (event_data.length == 3)
+			DataWrappersEvent event = null;
+			String[] event_data = s.split(",");
+			if (event_data.length >= 3)
 			{
-				events.add(new DataWrappersEvent(event_data[0], event_data[1], event_data[2]));
+				event = new DataWrappersEvent(event_data[0], event_data[1], event_data[2]);
+				events.add(event);
 			}
 			else
 			{
-				System.out.println("event_data.split != 3");
+				System.out.println("Cannot understand event data.");
+				return;
+			}
+			for (int i = 3; i < event_data.length; i++)
+			{
+				DataWrappersTag tag = getTagFromPath(event_data[i], hed.getTags());
+				if (tag == null)
+				{
+					System.out.println("Could not find all pre-loaded tags.");
+				}
+				else
+				{
+					System.out.println("Found pre-loaded tag.");
+					DataWrappersSelectedTag st = new DataWrappersSelectedTag(event.getUuid(), tag.getUuid());
+					if (selectedtags.contains(st)) {
+						selectedtags.remove(st);
+					}
+					else {
+						selectedtags.add(st);
+					}
+				}
 			}
 		}
+	}
+
+	private static DataWrappersTag getTagFromPath(String s, Collection<DataWrappersTag> tags)
+	{
+		for (DataWrappersTag tag : tags)
+		{
+			if (tag.getPath().equals(s))
+			{
+				return tag;
+			}
+			DataWrappersTag temp = getTagFromPath(s, tag.getChildTags());
+			if (temp != null)
+			{
+				return temp;
+			}
+		}
+		return null;
+
 	}
 
 	static boolean isTagCurrentlySelected(DataWrappersTag tag) {
