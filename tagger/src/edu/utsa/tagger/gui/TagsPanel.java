@@ -1,24 +1,24 @@
 package edu.utsa.tagger.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import edu.utsa.layouts.Anchor;
 import edu.utsa.layouts.AnchorLayout;
 import edu.utsa.layouts.ListLayout;
 import edu.utsa.tagger.DataWrappersHED;
 import edu.utsa.tagger.DataWrappersTag;
-import edu.utsa.tagger.ShellGUI;
+import edu.utsa.tagger.ErrorStack;
 import edu.utsa.xcomponent.XComponent;
 
 public class TagsPanel extends XComponent
 {
 	JPanel list;
+	XScrollPane scrollpane;
 	
 	public TagsPanel()
 	{
@@ -30,13 +30,12 @@ public class TagsPanel extends XComponent
 		JLabel header = new JLabel("Tags");
 		header.setFont(new Font("Segoe UI Light", Font.PLAIN, 36));
 		header.setForeground(new Color(112, 112, 112));
-		JScrollPane scrollpane = new JScrollPane();
-		scrollpane.setOpaque(false);
-		scrollpane.getViewport().setOpaque(false);
-		scrollpane.setBorder(BorderFactory.createEmptyBorder());
-		scrollpane.setViewportView(list);
+		scrollpane = new XScrollPane(list);
 		add(header, new Anchor(null, 0, Anchor.TL, true, false, 0, 0, 0, 0));
-		add(scrollpane, new Anchor(header, 0, Anchor.BOTTOM, true, true, 0, 0, 0, 0));
+		TagsSearch search = new TagsSearch();
+		this.setLayer(search, 1);
+		add(search, new Anchor(header, 1, Anchor.BOTTOM, true, false, 0, 0, 0, 0));
+		add(scrollpane, new Anchor(header, 0, Anchor.BOTTOM, true, true, 0, 25, 0, 0));
 	}
 	
 	public void load(DataWrappersHED hed)
@@ -67,5 +66,22 @@ public class TagsPanel extends XComponent
 	{
 		g.setColor(Color.white);
 		g.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
+	}
+	
+	public void scrollTo(DataWrappersTag tag)
+	{
+		for (Component c : list.getComponents())
+		{
+			if (c instanceof TagsComponent)
+			{
+				TagsComponent t = (TagsComponent) c;
+				if (t.getTag().equals(tag))
+				{
+					scrollpane.scrollTo(t.getY(), 0);
+					return;
+				}
+			}
+		}
+		ErrorStack.push(0, "Could not find tag.");
 	}
 }

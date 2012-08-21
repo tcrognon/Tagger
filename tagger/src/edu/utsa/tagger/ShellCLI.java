@@ -3,7 +3,6 @@ package edu.utsa.tagger;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.UUID;
 import javax.xml.bind.JAXBContext;
@@ -110,6 +109,25 @@ public final class ShellCLI
 					}
 				}
 			}
+		}
+	}
+	
+	public static Collection<DataWrappersTag> search(String s)
+	{
+		ArrayList<DataWrappersTag> result = new ArrayList<DataWrappersTag>();
+		searchHelper(s, result, hed.getTags());
+		return result;
+	}
+	
+	private static void searchHelper(String s, ArrayList<DataWrappersTag> result, Collection<DataWrappersTag> tags)
+	{
+		for (DataWrappersTag tag : tags)
+		{
+			if (tag.getPath().toLowerCase().indexOf(s.toLowerCase()) != -1)
+			{
+				result.add(tag);
+			}
+			searchHelper(s, result, tag.getChildTags());
 		}
 	}
 

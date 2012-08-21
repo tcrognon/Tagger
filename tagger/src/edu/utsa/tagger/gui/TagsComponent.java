@@ -153,4 +153,9 @@ public class TagsComponent extends XComponent {
 		setMaximumSize(null);
 		for (TagsComponent tc : children) tc.unhide();
 	}
+	
+	public DataWrappersTag getTag()
+	{
+		return tag;
+	}
 }

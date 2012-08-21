@@ -2,12 +2,12 @@ package edu.utsa.tagger;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.UUID;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -15,8 +15,6 @@ import javax.swing.SwingUtilities;
 import edu.utsa.layouts.Anchor;
 import edu.utsa.layouts.AnchorLayout;
 import edu.utsa.tagger.gui.EventsPanel;
-import edu.utsa.tagger.gui.MenuButtonZoomIn;
-import edu.utsa.tagger.gui.MenuButtonZoomOut;
 import edu.utsa.tagger.gui.MenuPanel;
 import edu.utsa.tagger.gui.NotificationError;
 import edu.utsa.tagger.gui.NotificationInfo;
@@ -196,6 +194,11 @@ public class ShellGUI extends JDialog {
 		ShellCLI.removeEvent(event_uuid);
 		events_panel.load(ShellCLI.getEvents(), ShellCLI.getSelectedTags());
 	}
+	
+	public static Collection<DataWrappersTag> search(String s)
+	{
+		return ShellCLI.search(s);
+	}
 
 	public static void selectEvent(DataWrappersEvent event)
 	{
@@ -245,5 +248,10 @@ public class ShellGUI extends JDialog {
 		base_font_size -= 4;
 		events_panel.repaint();
 		tags_panel.repaint();
+	}
+	
+	public static void scrollTo(DataWrappersTag tag)
+	{
+		tags_panel.scrollTo(tag);
 	}
 }
