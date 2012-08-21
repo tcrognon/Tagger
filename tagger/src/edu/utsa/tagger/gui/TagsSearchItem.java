@@ -21,5 +21,6 @@ public class TagsSearchItem extends XComponent
 	@Override public void clicked()
 	{
 		ShellGUI.scrollTo(tag);
+		ShellGUI.searchTagsGUI("");
 	}
 }

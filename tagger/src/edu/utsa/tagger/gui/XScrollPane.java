@@ -5,13 +5,15 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JPanel;
 import edu.utsa.layouts.Anchor;
 import edu.utsa.xcomponent.XComponent;
 
-public class XScrollPane extends XComponent
+public class XScrollPane extends XComponent implements MouseWheelListener
 {
 	JPanel content_panel;
 	Anchor content_anchor;
@@ -32,20 +34,33 @@ public class XScrollPane extends XComponent
 		add(vsb, vsb_anchor);
 		content_anchor = new  Anchor(null, 0, Anchor.TL, true, false, 0, 0, 0, 0);
 		add(content_panel, content_anchor);
+		this.addMouseWheelListener(this);
 	}
+	
+	@Override public void mouseWheelMoved(MouseWheelEvent e)
+	{
+	       int notches = e.getWheelRotation();
+	       if (notches < 0) {
+	           scroll(-20, 0);
+	       } else {
+	           scroll(20, 0);
+	       }
+	    }
+
 	
 	public void refresh()
 	{
-		content_anchor.setOffsets(0, -vert_pos, 0, 0);
 		double p = vert_pos;
 		double b = content_panel.getHeight();
 		double a = this.getHeight() - up.getHeight() - down.getHeight();
+		
+		if (vert_pos > b - a) vert_pos = (int) (b - a);
+		if (vert_pos < 0) vert_pos = 0;
+		
+		content_anchor.setOffsets(0, -vert_pos, 0, 0);
 		double sb_height = (a / b) * a;
-		double sb_top = (p / b) * a + up.getHeight();
+		double sb_top = (p / b) * a;
 		vsb.setPreferredSize(new Dimension(vsb.getPreferredSize().width, (int) sb_height));
-//		System.out.println("content_panel.getHeight() = " + a + "\n" +
-//							"scrollpane.getHeight() = " + b + "\n" +
-//							"scrollbar height = " + sb_height);
 		vsb_anchor.setOffsets(0, (int) sb_top, 0, 0);
 		revalidate();
 	}

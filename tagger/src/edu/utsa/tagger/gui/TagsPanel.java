@@ -19,6 +19,7 @@ public class TagsPanel extends XComponent
 {
 	JPanel list;
 	XScrollPane scrollpane;
+	TagsSearch search;
 	
 	public TagsPanel()
 	{
@@ -32,7 +33,7 @@ public class TagsPanel extends XComponent
 		header.setForeground(new Color(112, 112, 112));
 		scrollpane = new XScrollPane(list);
 		add(header, new Anchor(null, 0, Anchor.TL, true, false, 0, 0, 0, 0));
-		TagsSearch search = new TagsSearch();
+		search = new TagsSearch();
 		this.setLayer(search, 1);
 		add(search, new Anchor(header, 1, Anchor.BOTTOM, true, false, 0, 0, 0, 0));
 		add(scrollpane, new Anchor(header, 0, Anchor.BOTTOM, true, true, 0, 25, 0, 0));
@@ -83,5 +84,10 @@ public class TagsPanel extends XComponent
 			}
 		}
 		ErrorStack.push(0, "Could not find tag.");
+	}
+	
+	public void search(String s)
+	{
+		search.search(s);
 	}
 }

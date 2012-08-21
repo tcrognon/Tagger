@@ -16,14 +16,15 @@ import edu.utsa.xcomponent.XComponent;
 
 public class TagsSearch extends XComponent {
 
-	RichTextField search_box;
-	JComponent search_results;
+	private RichTextField search_box;
+	private JComponent search_results;
 	
 	public TagsSearch()
 	{
 		search_box = new RichTextField();
 		search_box.setInsets(new Insets(5, 3, 5, 3));
-		search_results = new JComponent(){
+		search_results = new JComponent()
+		{
 			@Override protected void paintComponent(Graphics g)
 			{
 				g.setColor(new Color(255, 255, 255, 200));
@@ -32,31 +33,9 @@ public class TagsSearch extends XComponent {
 		};
 		search_results.setLayout(new ListLayout(0));
 		search_box.addKeyListener(new KeyListener() {
-
-			@Override public void keyPressed(KeyEvent e)
-			{}
-
-			@Override public void keyReleased(KeyEvent e)
-			{
-				search_results.removeAll();
-				String search_string = search_box.getText();
-				if (search_string.equals(""))
-				{
-					revalidate();
-					return;
-				}
-				Collection<DataWrappersTag> results = ShellGUI.search(search_string);
-				for (DataWrappersTag t : results)
-				{
-					System.out.println(t.getPath());
-					search_results.add(new TagsSearchItem(t));
-				}
-				revalidate();
-			}
-
-			@Override public void keyTyped(KeyEvent e)
-			{
-			}
+			@Override public void keyPressed(KeyEvent e) {}
+			@Override public void keyReleased(KeyEvent e) { TagsSearch.this.search(); }
+			@Override public void keyTyped(KeyEvent e) {}
 		});
 		
 		add(search_box, new Anchor(null, 0, Anchor.TL, true, false, 0, 0, 0, 0));
@@ -65,6 +44,26 @@ public class TagsSearch extends XComponent {
 	
 	public void search(String s)
 	{
-		
+		System.out.println("searching for " + s);
+		search_box.setText(s);
+		search();
+	}
+	
+	public void search()
+	{
+		search_results.removeAll();
+		String search_string = search_box.getText();
+		if (search_string.equals(""))
+		{
+			revalidate();
+			return;
+		}
+		Collection<DataWrappersTag> results = ShellGUI.search(search_string);
+		for (DataWrappersTag t : results)
+		{
+			System.out.println(t.getPath());
+			search_results.add(new TagsSearchItem(t));
+		}
+		revalidate();
 	}
 }

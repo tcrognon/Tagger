@@ -254,4 +254,9 @@ public class ShellGUI extends JDialog {
 	{
 		tags_panel.scrollTo(tag);
 	}
+	
+	public static void searchTagsGUI(String s)
+	{
+		tags_panel.search(s);
+	}
 }
