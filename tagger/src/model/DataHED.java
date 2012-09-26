@@ -1,4 +1,4 @@
-package edu.utsa.tagger;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,27 +11,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="HED")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DataWrappersHED
+public class DataHED
 {
-	@XmlAttribute(name="version")
-	private String version;
-    @XmlElement(name="node")
-    private Collection<DataWrappersTag> tags = new ArrayList<DataWrappersTag>();
+	@XmlAttribute(name="version") private String version;
+    @XmlElement(name="node") private Collection<DataTag> tags = new ArrayList<DataTag>();
 
-    public Collection<DataWrappersTag> getTags()
+    Collection<DataTag> getTags()
     {
         return tags;
-    }
-
-    public void setTags(Collection<DataWrappersTag> tags)
-    {
-        this.tags = tags;
     }
     
     @Override public String toString()
     {
     	String s = "";
-    	for (DataWrappersTag n : tags)
+    	for (DataTag n : tags)
     	{
     		s += n.toString() + "\n";
     	}

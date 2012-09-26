@@ -11,7 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
-import edu.utsa.tagger.ErrorStack;
+import model.ErrorStack;
 
 public class XDragPane extends JComponent {
 

@@ -1,4 +1,4 @@
-package edu.utsa.tagger.gui;
+package view;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -35,7 +35,7 @@ public class NotificationError extends XComponent
 		message = new JLabel();
 		message.setForeground(Color.white);
 		insets = new Insets(10, 20, 10, 20);
-		add(message, new Anchor(null, 0, Anchor.CC, false, false, 0, 0, 0, 0));
+		add(message, new Anchor(Anchor.CC, Anchor.NOSTRETCH));
 
 		timer = new Timer(50, new ActionListener() {
 
@@ -63,7 +63,7 @@ public class NotificationError extends XComponent
 			}});
 	}
 
-	@Override protected void draw(Graphics2D g)
+	@Override public void draw(Graphics2D g)
 	{
 		Composite c = g.getComposite();
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));

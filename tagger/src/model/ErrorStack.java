@@ -1,23 +1,7 @@
-package edu.utsa.tagger;
+package model;
 
 import java.util.Stack;
-
-class Err
-{
-	int code;
-	String message;
-	
-	Err(int code, String message)
-	{
-		this.code = code;
-		this.message = message;
-	}
-	
-	public String getMessage()
-	{
-		return message;
-	}
-}
+import view.View;
 
 public final class ErrorStack
 {
@@ -29,10 +13,10 @@ public final class ErrorStack
 	{
 		Err err = new Err(code, message);
 		error_stack.push(err);
-		if (ShellGUI.dialog_open)
+		/*if (View.dialog_open)
 		{
-			ShellGUI.getNotificationError().newNotification(message);
-		}
+			View.getNotificationError().newNotification(message);
+		}*/
 		System.out.println(message);
 	}
 	
@@ -49,5 +33,17 @@ public final class ErrorStack
 	public static boolean isEmpty()
 	{
 		return error_stack.isEmpty();
+	}
+	
+	public static class Err
+	{
+		public final int code;
+		public final String message;
+		
+		public Err(int code, String message)
+		{
+			this.code = code;
+			this.message = message;
+		}
 	}
 }
