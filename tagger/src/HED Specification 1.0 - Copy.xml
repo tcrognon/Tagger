@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HED version="1.0">
+	<node label="Time-Locked Event" default="true">
+		<node label="Stimulus" description="Input from outside world, exogenous">
+			<node label="Visual">
+				<node label="Fixation Point" />
+				<node label="Shape">
+					<node label="Ellipse">
+						<node label="Circle" />
+					</node>
+					<node label="Rectangle">
+						<node label="Square" />
+					</node>
+					<node label="Star" />
+					<node label="Triangle" />
+					<node label="Gabor Patch" />
+					<node label="Cross" description="By default a vertical-horizontal cross, for rotated add /rotated/ tag" />
+					<node label="Rotated" extensionAllowed="true">
+						<node label="#" description="In degrees" />
+					</node>
+				</node>
+				<node label="Luminance" requireChild="true">
+					<node label="#" description="In candela, e.g 25 cd" />
+				</node>
+				<node label="Size" requireChild = "true">
+					<node label="#" description="In degrees, e.g 5 deg" />
+				</node>
+				<node label="Checkerboard" />
+				<node label="Uniform Color" description="These are CSS 3 basic color names, available in Appendix 1">
+					<node label="Aqua" />
+					<node label="Black" />
+					<node label="Blue" />
+					<node label="Fuchsia" />
+					<node label="Gray" />
+					<node label="Green" />
+					<node label="Lime" />
+					<node label="Maroon" />
+					<node label="Navy" />
+					<node label="Olive" />
+					<node label="Purple" />
+					<node label="Red" />
+					<node label="Silver" />
+					<node label="Teal" />
+					<node label="White" />
+					<node label="Yellow" />
+					<node label="Red">
+						<node label="#" description="R value of RGB, between 0 and 1" />
+					</node>
+					<node label="Blue">
+						<node label="#" description="B value of RGB, between 0 and 1" />
+					</node>
+					<node label="Green">
+						<node label="#" description="G value of RGB, between 0 and 1" />
+					</node>
+					<node label="Hue" requireChild="true">
+						<node label="#" description="H value of RGB, between 0 and 1" />
+					</node>
+					<node label="Saturation" requireChild="true">
+						<node label="#" description="S value of RGB, between 0 and 1" />
+					</node>
+					<node label="Value" requireChild="true">
+						<node label="#" description="V value of RGB, between 0 and 1" />
+					</node>
+				</node>
+				<node label="Achromatic" description="Gray, is only in black, white or between">
+					<node label="#" description="White intensity between 0 and 1" />
+				</node>
+				<node label="Screen Location" requireChild="true" description="If centered at a screen location, not all over the screen">
+					<node label="Center" />
+					<node label="Top" />
+					<node label="Bottom" />
+					<node label="Left" />
+					<node label="Right" />
+					<node label="Upper Left" />
+					<node label="Lower Left" />
+					<node label="Upper Right" />
+					<node label="Lower Right" />
+					<node label="Angle" requireChild="true" description="Clockwise angle" />
+					<node label="Center Displacement" requireChild="true">
+						<node label="#" description="Displacement from screen center, in any direction, in degrees" />
+					</node>
+				</node>
+				<node label="Up-down Separated" description="Stimuli presented both at the top and the bottom of fovea">
+					<node label="#" description="Separation in degrees" />
+				</node>
+				<node label="Bilateral" description="For bilateral visual field stimulus presentations">
+					<node label="#" description="Separation in degrees" />
+				</node>
+				<node label="Foveal" description="Presented exactly where the subject is now looking" />
+				<node label="Peripheral" description="Presented where the subject is not directly looking" />
+				<node label="Clock Face" requireChild="true">
+					<node label="#" description="Hour:Min" />
+				</node>
+				<node label="3D Object" />
+				<node label="Abstract Pattern" />
+				<node label="Non-Linguistic Symbol">
+					<node label="Meaningful" />
+					<node label="Not Meaningful" />
+					<node label="Newly Learned Meaning" />
+				</node>
+				<node label="Braille Character" />
+				<node label="Face">
+					<node label="Whole face with hair" />
+					<node label="Whole face without hair" />
+					<node label="Cut-out" />
+					<node label="Parts only">
+						<node label="Nose" />
+						<node label="Lips" />
+						<node label="Chin" />
+						<node label="Eyes" />
+						<node label="Eye" />
+					</node>
+				</node>
+				<node label="Movie">
+					<node label="Motion">
+						<node label="In 3D Space">
+							<node label="Body">
+								<node label="Point Light" />
+								<node label="Motion Capture" />
+								<node label="Video" />
+								<node label="Animation">
+									<node label="Outline" />
+								</node>
+							</node>
+							<node label="Social" description="e.g., mother-child interaction, videotaped or animated by a triangle and a square" />
+						</node>
+					</node>
+					<node label="On Screen" requireChild="true" description="Note: above, also need/could use starting position on screen, end position, velocity in deg/s, etc.">
+						<node label="Down" description="e.g. /2 deg" />
+						<node label="Up" />
+						<node label="Horizontal">
+							<node label="Right" description="e.g. /3 deg" />
+						</node>
+						<node label="Oblique">
+							<node label="Clock Face" requireChild="true">
+								<node label="#" description="e.g.,  4:30" />
+							</node>
+						</node>
+						<node label="Flickering">
+							<node label="Checkerboard" />
+							<node label="Dots" />
+							<node label="Steady State" description="Fixed stimulus onset asynchrony" />
+							<node label="#" description="flicker rate in Hz" />
+						</node>
+					</node>
+					<node label="Film Clip" description="Any clip from a commercial film, TV,..." />
+				</node>
+				<node label="FalseFont" />
+				<node label="Food" />
+				<node label="Fractal" />
+				<node label="LED" />
+				<node label="Random Dot" />
+				<node label="Language" extensionAllowed="true">
+					<node label="Asian">
+						<node label="Chinese" />
+						<node label="Japanese" />
+					</node>
+					<node label="Latin">
+						<node label="English" />
+						<node label="German" />
+						<node label="French" />
+					</node>
+					<node label="Character">
+						<node label="Digit" />
+						<node label="Pseudo-character" description="Alphabet-like, but not really" />
+						<node label="Letter" description="Authograph, valid letters including numbers, e.g. A, B, 5..." />
+					</node>
+					<node label="Word">
+						<node label="Noun">
+							<node label="Proper" description="A proper noun, refers to a unique entity, such as London, Jupiter, ..." />
+							<node label="Common" description="Refers to a class of entities (cities, planets, persons, corporations), or non-unique instances of a certain class (a city, another planet, these persons, our corporation)" />
+						</node>
+						<node label="Verb" />
+						<node label="Adjective" />
+						<node label="Pseudoword" />
+						<node label="#" description="Number of words" />
+					</node>
+					<node label="Sentence">
+						<node label="Full" />
+						<node label="Partial" />
+						<node label="#" description="Number of sentences" />
+						<node label="Paragraph">
+							<node label="#" description="Number of paragraphs" />
+							<node label="Story" />
+						</node>
+					</node>
+				</node>
+				<node label="Natural Scene" />
+				<node label="Drawing" description="e.g. cartoons">
+					<node label="Line Drawing" />
+				</node>
+				<node label="IAPS" description="International Affective Picture System" />
+				<node label="Bistable" description="This could be either abstract line drawings or object illustrations" />
+				<node label="Background" requireChild="true">
+					<node label="Uniform Color" description="These are CSS 3 basic color names, available in Appendix 1">
+						<node label="Aqua" />
+						<node label="Black" />
+						<node label="Blue" />
+						<node label="Fuchsia" />
+						<node label="Gray" />
+						<node label="Green" />
+						<node label="Lime" />
+						<node label="Maroon" />
+						<node label="Navy" />
+						<node label="Olive" />
+						<node label="Purple" />
+						<node label="Red" />
+						<node label="Silver" />
+						<node label="Teal" />
+						<node label="White" />
+						<node label="Yellow" />
+						<node label="Red">
+							<node label="#" description="R value of RGB, between 0 and 1" />
+						</node>
+						<node label="Blue">
+							<node label="#" description="B value of RGB, between 0 and 1" />
+						</node>
+						<node label="Green">
+							<node label="#" description="G value of RGB, between 0 and 1" />
+						</node>
+						<node label="Hue" requireChild="true">
+							<node label="#" description="H value of RGB, between 0 and 1" />
+						</node>
+						<node label="Saturation" requireChild="true">
+							<node label="#" description="S value of RGB, between 0 and 1" />
+						</node>
+						<node label="Value" requireChild="true">
+							<node label="#" description="V value of RGB, between 0 and 1" />
+						</node>
+					</node>
+				</node>
+			</node>
+		</node>
+	</node>
+	<node label="Context" extensionAllowed="true" description="Describes the context of the whole experiment, also includes tags that are common across all events">
+			<node label="With Chin Rest" />
+			<node label="Sitting" />
+			<node label="Standing" />
+			<node label="Prone" description="e.g. on a bed" />
+			<node label="Running">
+        			<node label="Treadmill">
+            			<node label="#" description="Speed (meters per second)" />
+					</node>
+				</node>
+			<node label="Walking">
+        			<node label="Treadmill">
+            			<node label="#" description="Speed (meters per second)" />
+					</node>
+				</node>
+			<node label="Indoors" default="true">
+				<node label="Clinic" description="Recording in a clinical setting, e.g. in a hospital or doctor’s office" />
+			</node>
+		<node label="Outdoors" />
+		<node label="Motion platform" description="Subject is on a motion platform, e.g. simulated car movements" />
+		<node label="Screen Distance" requireChild="true">
+			<node label="#" description="Distance in meters from subject eyes to the presentation screen , e.g. 0.3 for 30 cm from subject eyes to the monitor" />
+		</node>
+	</node>
+	<node label="Custom" extensionAllowed="true" description="This node can be used to organize events in an alternative (parallel) hierarchy: you can define your custom tags and hierarchies without any restriction under this node. These tags will still be matched to each other, for example /Custom/Dance/Waltz is considered a subtype of /Custom/Dance." />
+	<node label="Label" requireChild = "true" description="A short label for the event. For example /Label/Accept Button. Please note that the information under this tag will not be used in the analysis and is provided solely for the convenience in referring to events in the context of a single study." />
+	<node label="Description" requireChild = "true" description="A detailed description of the event as text, can be used to complement information encoded in other HED tags. Please note that information under this tag would be unusable by computers and analysis software and should not be used as the main method for describing events (use HED tags other than Description and Label to explain events in a machine-understandable manner)" />
+	<node label="HED" requireChild = "true" description="HED specification version number: normally there is no need to specify the version number in the HED string since it will be matched by default to the most recent compliant version, but this tag can be used to specify the exact HED version the HED string was based on." />
+</HED>
